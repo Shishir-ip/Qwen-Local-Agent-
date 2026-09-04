@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Qwen Local Agent</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css" />
+</head>
+<body>
+<div id="connecting"><div class="spin"></div><div>Connecting to local server…</div></div>
+
+<aside id="sidebar">
+  <div class="brand"><span class="logo">◆</span><span>Qwen Local Agent</span></div>
+  <button id="newChat" class="primary">＋ New chat</button>
+  <div id="sessionList" class="sessions"></div>
+  <div class="side-foot"><button id="openSettings" class="ghost">⚙ Settings</button></div>
+</aside>
+
+<main id="main">
+  <header id="topbar">
+    <div class="model-badge" id="modelBadge">qwen3.7-max</div>
+    <label class="ws">📁 <input id="workspace" placeholder="Workspace folder (e.g. C:\my-repo)" /></label>
+    <label class="toggle" title="Deep thinking"><input type="checkbox" id="thinkToggle" /><span>Thinking</span></label>
+    <button id="stopBtn" class="ghost hidden">■ Stop</button>
+  </header>
+
+  <section id="chat"></section>
+
+  <div id="welcome" class="welcome">
+    <h1>Qwen3.7‑Max, on your machine.</h1>
+    <p>Set your <b>Workspace</b> above, then ask it to read, edit, create or delete files and run commands. Destructive actions pop an approval dialog.</p>
+    <div class="examples">
+      <button class="ex">This workspace is my App Store repo. The app icons/logos aren't showing — find the bug and fix it.</button>
+      <button class="ex">List the project, read package.json, then run the build and fix any errors.</button>
+      <button class="ex">Add a new file src/utils/format.ts with a currency formatter and import it where needed.</button>
+      <button class="ex">Search the code for the Supabase client and tell me the exact query to add a row.</button>
+    </div>
+  </div>
+
+  <footer id="composer">
+    <div class="composer-row">
+      <div class="perm" id="permWrap" data-mode="ask">
+        <button id="permBtn" class="perm-btn" type="button" title="Permission mode">
+          <span class="perm-dot" id="permDot"></span>
+          <span class="perm-ic" id="permIc">🛡️</span>
+          <span class="perm-label" id="permLabel">Ask Permission</span>
+          <span class="perm-chev">▾</span>
+        </button>
+        <div class="perm-menu" id="permMenu" role="menu">
+          <button class="perm-item" data-mode="ask" role="menuitemradio">
+            <span class="pi-ic">🛡️</span>
+            <span class="pi-txt"><b>Ask Permission</b><small>Prompt before every edit / delete / command</small></span>
+            <span class="pi-check">✓</span>
+          </button>
+          <button class="perm-item" data-mode="full" role="menuitemradio">
+            <span class="pi-ic">⚡</span>
+            <span class="pi-txt"><b>Full Access</b><small>Auto-approve everything — no prompts</small></span>
+            <span class="pi-check">✓</span>
+          </button>
+        </div>
+      </div>
+      <div class="box">
+        <textarea id="input" rows="1" placeholder="Ask Qwen to do something with your files…  (Enter = send, Shift+Enter = newline)"></textarea>
+        <button id="sendBtn" class="primary send" title="Send">➤</button>
+      </div>
+    </div>
+    <div class="hint">Runs locally on 127.0.0.1 · model calls go to Alibaba Model Studio · files/commands run on YOUR PC</div>
+  </footer>
+</main>
+
+<!-- settings drawer -->
+<div id="settingsOverlay" class="overlay hidden">
+  <div class="drawer">
+    <h2>Settings <button id="closeSettings" class="ghost x">✕</button></h2>
+    <label>API key (stored locally in config.json)
+      <div class="pw"><input id="s_key" type="password" /><button id="toggleKey" class="ghost">show</button></div>
+    </label>
+    <label>Base URL (OpenAI‑compatible) <input id="s_base" /></label>
+    <label>Model <input id="s_model" /></label>
+    <label>Default workspace <input id="s_ws" /></label>
+    <div class="row">
+      <label class="toggle"><input type="checkbox" id="s_think" /><span>Deep thinking</span></label>
+    </div>
+    <p class="note">Permission mode (Ask / Full Access) is the dropdown at the bottom-left of the chat box.</p>
+    <div class="row">
+      <label>Command timeout (s) <input id="s_cto" type="number" /></label>
+      <label>Max tool turns <input id="s_mt" type="number" /></label>
+    </div>
+    <div class="actions">
+      <button id="testBtn" class="ghost">🔌 Test connection</button>
+      <button id="saveSettings" class="primary">Save</button>
+    </div>
+    <div id="settingsStatus" class="status"></div>
+    <p class="note">Tip: if “Test” says model‑not‑found, copy the exact model code from your console’s <i>Model details / API References</i>. The base URL must end with <code>/compatible-mode/v1</code>.</p>
+  </div>
+</div>
+
+<!-- approval modal -->
+<div id="confirmOverlay" class="overlay hidden">
+  <div class="modal">
+    <h3 id="cfTitle">Approve action?</h3>
+    <div id="cfSummary" class="cfsum"></div>
+    <pre id="cfArgs" class="cfargs"></pre>
+    <div class="actions">
+      <button id="cfDeny" class="ghost deny">Deny</button>
+      <button id="cfAllow" class="primary">Allow</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
