@@ -1,0 +1,13 @@
+{
+  "api_key": "",
+  "base_url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+  "model": "qwen3.7-max",
+  "default_workspace": "",
+  "enable_thinking": true,
+  "confirm_file_changes": true,
+  "confirm_commands": true,
+  "confirm_timeout": 300,
+  "max_turns": 30,
+  "command_timeout": 180,
+  "permission_mode": "ask"
+}
