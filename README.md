@@ -2,16 +2,16 @@
 
 A local FastAPI app that provides a browser UI for running a Qwen coding assistant against files in your workspace.
 
-## Project files
+## Project Files
 
-- `/home/runner/work/Qwen-Local-Agent-/Qwen-Local-Agent-/server.py` - backend API and streaming chat server
-- `/home/runner/work/Qwen-Local-Agent-/Qwen-Local-Agent-/tools.py` - filesystem and command tools used by the agent
-- `/home/runner/work/Qwen-Local-Agent-/Qwen-Local-Agent-/static/index.html` - UI shell
-- `/home/runner/work/Qwen-Local-Agent-/Qwen-Local-Agent-/static/app.js` - UI logic and streaming client
-- `/home/runner/work/Qwen-Local-Agent-/Qwen-Local-Agent-/static/style.css` - UI styles
-- `/home/runner/work/Qwen-Local-Agent-/Qwen-Local-Agent-/requirements.txt` - Python dependencies
-- `/home/runner/work/Qwen-Local-Agent-/Qwen-Local-Agent-/start.bat` - one-click Windows startup script
-- `/home/runner/work/Qwen-Local-Agent-/Qwen-Local-Agent-/config.example.json` - safe config template
+- `server.py` - Backend API and streaming chat server
+- `tools.py` - Filesystem and command tools used by the agent
+- `static/index.html` - UI shell
+- `static/app.js` - UI logic and streaming client
+- `static/style.css` - UI styles
+- `requirements.txt` - Python dependencies
+- `start.bat` - One-click Windows startup script
+- `config.example.json` - Safe config template
 
 ## Requirements
 
@@ -21,8 +21,11 @@ A local FastAPI app that provides a browser UI for running a Qwen coding assista
 
 ## Setup
 
-1. Open a terminal in `/home/runner/work/Qwen-Local-Agent-/Qwen-Local-Agent-`.
-2. Create and activate a virtual environment.
+1. Open a terminal in the project directory.
+2. Create and activate a virtual environment:
+   - `python -m venv venv`
+   - Windows: `venv\Scripts\activate`
+   - macOS/Linux: `source venv/bin/activate`
 3. Install dependencies:
    - `pip install -r requirements.txt`
 4. Create local config:
@@ -40,11 +43,15 @@ A local FastAPI app that provides a browser UI for running a Qwen coding assista
 
 Run:
 
-- `python server.py`
+```bash
+python server.py
+```
 
-Then open:
+Then open in your browser:
 
-- `http://127.0.0.1:8765`
+```
+http://127.0.0.1:8765
+```
 
 ## How it works
 
@@ -59,8 +66,8 @@ Then open:
 - Keep your API key private; never share it in code, screenshots, or logs.
 - This repository now ignores local secret/state files through `.gitignore`.
 
-## Missing or optional files
+## Missing or Optional Files
 
-- `README.md` was missing and has now been added.
 - `.gitignore` was missing and has now been added.
 - `config.json` is intentionally not tracked; generate it locally from `config.example.json`.
+- `sessions.json` is created at runtime to store chat sessions.
