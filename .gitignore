@@ -1,8 +1,1 @@
-venv/
-.venv/
-env/
-__pycache__/
-*.pyc
-
-config.json
-sessions.json
+Nothing needs to be added to .gitignore since only a README.md file was modified and no build artifacts, dependencies, or temporary files were detected in the changes.
